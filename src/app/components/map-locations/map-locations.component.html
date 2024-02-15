@@ -1,0 +1,25 @@
+<google-map 
+  height="100%"
+  width="100%"
+  [center]="center"
+  [zoom]="zoom"
+  (mapClick)="addMarker($event)">
+    @for (position of markerPositions; track position.id) {
+      <map-marker #marker="mapMarker" [position]="position" (mapClick)="openInfoWindow(marker)" />
+      <map-info-window>
+        <div class="container">
+          <div class="col-md-5 info">
+            <img [src]="position.photo" alt="">
+          </div>  
+          <div class="col-md-5 info">
+            <strong>{{position.name | uppercase }}</strong>
+            <br>
+            <small>{{position.category}}</small>
+          </div>  
+          <button class="col-md-2 button-showinfo">VER</button>
+
+        </div>
+      </map-info-window>
+    }
+
+</google-map>

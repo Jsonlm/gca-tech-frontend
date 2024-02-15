@@ -1,0 +1,28 @@
+<div class="cards-section">
+    <div class="card text-left container" *ngFor="let salesman of salesmans">
+        <div class="card-body">
+            <div class="row col-md-5 section1" style="float: left;">
+                <strong class="card-title">{{salesman.name}}</strong>
+                <strong class="card-text coordinates">{{salesman.category}}</strong>
+                <br>
+                <br>
+                <small class="card-text coordinates">Longitud: {{salesman.coordinates.longitude | number:'1.6'}}</small>
+                <small class="card-text coordinates">Latitud: {{salesman.coordinates.latitude | number:'1.6' }}</small>
+                <small class="card-text coordinates">Altitud: {{salesman.coordinates.height | number:'1.6' }}</small>
+            </div>
+            <div class="row col-md-5 sectionmid" style="float: left;">
+                <small class="card-text">{{salesman.address}}</small>
+                <small><strong class="card-text">{{salesman.vehicle}}</strong></small>
+                <small class="card-text"
+                    [style.color]="salesman.isActive ? statusColorPalette[0] : statusColorPalette[1]">
+                    {{salesman.isActive ? 'activo' : 'inactivo'}}
+                </small>
+            </div>
+            <div class="row col-md-2 section2" style="float: right;">
+                <img class="card-img-top" [src]="salesman.photo" alt="">
+                <p>texto</p>
+            </div>
+        </div>
+    </div>
+    <button class="button-add">CREAR NUEVO</button>
+</div>
