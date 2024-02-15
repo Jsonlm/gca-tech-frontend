@@ -1,4 +1,4 @@
-<div class="cards-section">
+<div class="cards-section main-container">
     <div class="card text-left container" *ngFor="let salesman of salesmans">
         <div class="card-body">
             <div class="row col-md-5 section1" style="float: left;">
@@ -10,7 +10,7 @@
                 <small class="card-text coordinates">Latitud: {{salesman.coordinates.latitude | number:'1.6' }}</small>
                 <small class="card-text coordinates">Altitud: {{salesman.coordinates.height | number:'1.6' }}</small>
             </div>
-            <div class="row col-md-5 sectionmid" style="float: left;">
+            <div class="row col-md-4 sectionmid" style="float: left;">
                 <small class="card-text">{{salesman.address}}</small>
                 <small><strong class="card-text">{{salesman.vehicle}}</strong></small>
                 <small class="card-text"
@@ -18,9 +18,9 @@
                     {{salesman.isActive ? 'activo' : 'inactivo'}}
                 </small>
             </div>
-            <div class="row col-md-2 section2" style="float: right;">
-                <img class="card-img-top" [src]="salesman.photo" alt="">
-                <p>texto</p>
+            <div class="row col-md-3 section2" style="float: right;">
+                <img class="card-img-top" [src]="salesman.photo+'.jpg'" alt="">
+                <img class="card-img-vehicle" [src]="'/assets/'+salesman.vehicle+'.svg'" alt="">
             </div>
         </div>
     </div>

@@ -11,7 +11,8 @@
   <map-info-window>
     <div class="container">
       <div class="col-md-5 info">
-        <img  alt="" [src]="saleman.photo + '.jpg'" />
+        <img class="img-salesman" [src]="saleman.photo + '.jpg'" />
+        <div class="isactive" [style.backgroundColor]="saleman.isActive ? statusColorPalette[0] : statusColorPalette[1]"></div>
       </div>
       <div class="col-md-5 info">
         <strong>{{saleman.name}}</strong>

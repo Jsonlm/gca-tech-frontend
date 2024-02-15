@@ -21,7 +21,7 @@ export class SalesmansComponent {
   @Output() salesmansArray = new EventEmitter<string[]>();
 
   public salesmans: Salesman[];
-  public statusColorPalette = ['#00913f ', ' #FF0000'];
+  public statusColorPalette = ['#00913f','#FF0000'];
 
   constructor(
     readonly salesmanService: SalesmanService,

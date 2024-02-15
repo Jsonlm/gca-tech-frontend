@@ -22,8 +22,8 @@ export interface Salesmans {
 })
 export class MapLocationsComponent {
 
-  public position: any;
   @Input() salemansItems: string[] = [];
+  public statusColorPalette = ['#00913f','#FF0000'];
   saleman: any = {};
 
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
@@ -59,6 +59,5 @@ export class MapLocationsComponent {
         }
       });
     }, 2000);
-
   }
 }
