@@ -24,19 +24,19 @@ Tecnologías usadas
 
 services
   
-  GET getAll, getById
+    GET getAll, getById
   
-  POST create
+    POST create
 
 routes
   
-  localhost:4200/home
+    localhost:4200/home
 
 components
   
-  navbar, home, map-locations, salesmans, salesman-view
+    navbar, home, map-locations, salesmans, salesman-view
 
 modules
   
-  HttpClient, google-maps, ReactiveForms, Forms, Common
+    HttpClient, google-maps, ReactiveForms, Forms, Common
   
