@@ -14,20 +14,26 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './home.component.sass'
 })
 export class HomeComponent {
-
+  
   @Input() showDialog: boolean = false;
-  selectedSalesman: any;
-
+  public selectedSalesman: any;
+  public page: string = 'home';
+  
   handleSalesmanSelected(salesman: any) {
     this.selectedSalesman = salesman;
   }
-
+  
   receivedArray: string[] = [];
-
+  
   receiveData(data: string[]) {
     this.receivedArray = data;
   }
-
+  
+  receivePage($event: string) {
+    console.log($event);
+    
+    this.page = $event;
+  }
   ngOnInit(): void {
   }
 

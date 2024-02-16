@@ -1,9 +1,20 @@
 <div class="row">
     <div class="row header">
-        <app-navbar></app-navbar>
+        <app-navbar (pageSelected)="receivePage($event)"></app-navbar>
     </div>
     <div class="col-md-8 map-data">
-        <app-map-locations [salemansItems]="receivedArray"  (salesmanSelected)="handleSalesmanSelected($event)"></app-map-locations>
+        @if (page === 'home') {
+            <app-map-locations [salemansItems]="receivedArray"  (salesmanSelected)="handleSalesmanSelected($event)"></app-map-locations>
+        }
+        @if (page === 'page1') { 
+            <div style="background-color: brown; width: 100%; height: 100vh;"></div>
+        }
+        @if (page === 'page2') {
+            <div style="background-color: rgb(34, 73, 202); width: 100%; height: 100vh;"></div>
+        }
+        @if (page === 'page3') {
+            <div style="background-color: rgb(221, 233, 55); width: 100%; height: 100vh;"></div>
+        }
     </div>
     <div class="col-md-4 salesmans">
         <app-salesmans (salesmansArray)="receiveData($event)" ></app-salesmans>
