@@ -5,7 +5,7 @@ import { Salesman } from '../models/salesman.model.ts';
 
 const headers= new HttpHeaders()
 .set('Access-Control-Allow-Headers', 'X-API-KEY,Origin,X-Requested-With,Content-Type,x-access-token,authorization,Authorization,Accept,Access-Control-Request-Method,token, application/json' )
-.set('Access-Control-Allow-Origin', 'http://74.235.109.154/api/salesman')
+.set('Access-Control-Allow-Origin', 'http://74.235.109.154')
 .set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
 @Injectable({
