@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SalesmanViewComponent } from '../shared/dialogs/salesman-view/salesman-view.component';
+import { Subscription, interval, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-salesmans',
@@ -27,20 +28,28 @@ export class SalesmansComponent {
   public disabled: boolean = false;
   public show: boolean = false;
   public edit: boolean = true;
+  private subscription: Subscription;
 
   constructor(
     readonly salesmanService: SalesmanService,
     private router: Router
   ) {
     this.salesmans = [];
+    this.subscription = interval(10000)
+      .pipe(
+        switchMap(() => this.salesmanService.getAll())
+      )
+      .subscribe((data: any) => {
+        this.getPhotos(data);
+        this.salesmans = data;
+        this.salesmansArray.emit(data);
+      });
   }
 
   ngOnInit(): void {
     this.salesmanService.getAll().subscribe((data: any) => {
       this.getPhotos(data);
-     // this.getLocationsArray(data);
       this.salesmans = data;
-      console.log(this.salesmans);
       this.salesmansArray.emit(data);
     });
   }
@@ -55,23 +64,16 @@ export class SalesmansComponent {
     });
   }
 
-  getLocationsArray(locations: []) {
-    this.navigateToPassData(locations)
-  }
-
-  navigateToPassData(coordinates: any[]) {
-    this.router.navigate(['/home'], { queryParams: { array: JSON.stringify(coordinates) } });
-  }
-
   showSalesmanForm() {
     this.show = true;
     this.disabled = false;
     this.edit = true;
   }
 
-  /* ngOnDestroy(): void {
-    this.salesmanService.getAll().subscribe().unsubscribe();    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+  ngOnDestroy(): void {
 
-  } */
+    if (this.subscription) {
+      this.subscription.unsubscribe(); 
+    }
+  }
 }

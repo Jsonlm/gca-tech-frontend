@@ -19,11 +19,11 @@ export class SalesmanViewComponent {
 
   public formSalesmans = this.formBuilder.group({
     id: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(6)],),
-    name: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(6)]),
-    category: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(8)]),
+    name: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(6), Validators.pattern('[a-zA-Z ]')]),
+    category: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(8), Validators.pattern('[a-zA-Z ]')]),
     address: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(8)]),
-    photo: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(7)]),
-    vehicle: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(4)]),
+    photo: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(7), Validators.pattern('[a-zA-Z 0-9]')]),
+    vehicle: new FormControl({ value: '', disabled: this.edit }, [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z ]')]),
   });
 
 
@@ -31,8 +31,6 @@ export class SalesmanViewComponent {
   }
 
   async ngOnInit() {
-    console.log(this.salesman);
-
     if (!this.edit && this.salesman) {
       this.formSalesmans.setValue({
         id: this.salesman.id,
@@ -53,7 +51,7 @@ export class SalesmanViewComponent {
   saveSalesman() {
     if (this.formSalesmans.valid) {
       try {
-        const salesmanData: any = this.formSalesmans.value; // Obteniendo los valores del formulario
+        const salesmanData: any = this.formSalesmans.value;
         this.salesmanService.create(salesmanData).subscribe((data: any) => {
           if (data.statudCode === "OK") {
             this.closeModal();

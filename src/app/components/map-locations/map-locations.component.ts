@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker, } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
 import { SalesmanViewComponent } from '../shared/dialogs/salesman-view/salesman-view.component';
@@ -22,10 +22,6 @@ export interface Salesmans {
   styleUrl: './map-locations.component.sass',
 })
 export class MapLocationsComponent {
-  changeShowstatus($event: boolean) {
-    this.show = $event;
-  }
-
   @Input() salemansItems: string[] = [];
 
   public salemansItem: Salesmans | any;
@@ -38,7 +34,7 @@ export class MapLocationsComponent {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
   constructor(readonly salesService: SalesmanService) { }
 
-  center: google.maps.LatLngLiteral = { lat: 24, lng: 12 };
+  center: google.maps.LatLngLiteral = { lat: 4, lng: -74 };
   zoom = 4;
   markerOptions: google.maps.MarkerOptions = { draggable: false };
   markerPositions: any[] = [];
@@ -70,18 +66,36 @@ export class MapLocationsComponent {
     }, 2000);
   }
 
+  ngOnChanges(changes: SimpleChanges | any) {
+    this.updateMapMarkers(changes.salemansItems.currentValue);
+  }
+
+  updateMapMarkers(salesmanItems: any[]) {
+    this.markerPositions = salesmanItems.map(item => ({
+      id: item.id,
+      photo: item.photo,
+      name: item.name,
+      category: item.category,
+      isActive: item.isActive,
+      lat: item.coordinates.latitude,
+      lng: item.coordinates.longitude
+    }));
+  }
+
   getSalesmanInfo(salesman: any) {
     let obj = {};
 
     this.salesService.getById(salesman.id).subscribe((data: any) => {
       obj = data;
       this.salemansItem = obj;
-      
-      
       setTimeout(() => {
-        
         this.show = true;
       }, 1500);
     })
   }
+
+  changeShowstatus($event: boolean) {
+    this.show = $event;
+  }
+
 }
