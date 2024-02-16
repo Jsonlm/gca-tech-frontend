@@ -19,7 +19,13 @@
         <br />
         <small>{{saleman.category}}</small>
       </div>
-      <button class="col-md-2 button-showinfo">VER</button>
+      <button class="col-md-2 button-showinfo" (click)="getSalesmanInfo(saleman)">VER</button>
     </div>
   </map-info-window>
 </google-map>
+
+<div class="dialog-salesman">
+  @if (show) {
+    <app-salesman-view [show]="show" [disabled]="disabled" [salesman]="salemansItem" (showInFalse)="changeShowstatus($event)"></app-salesman-view>
+  }
+</div>

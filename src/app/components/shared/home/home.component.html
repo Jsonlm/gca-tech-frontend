@@ -3,7 +3,7 @@
         <app-navbar></app-navbar>
     </div>
     <div class="col-md-8 map-data">
-        <app-map-locations [salemansItems]="receivedArray"></app-map-locations>
+        <app-map-locations [salemansItems]="receivedArray"  (salesmanSelected)="handleSalesmanSelected($event)"></app-map-locations>
     </div>
     <div class="col-md-4 salesmans">
         <app-salesmans (salesmansArray)="receiveData($event)" ></app-salesmans>

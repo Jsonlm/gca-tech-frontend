@@ -24,5 +24,9 @@
             </div>
         </div>
     </div>
-    <button class="button-add">CREAR NUEVO</button>
+    <button class="button-add" (click)="showSalesmanForm()">CREAR NUEVO</button>
 </div>
+
+<div class="dialog-salesman">
+    <app-salesman-view [show]="show" [disabled]="disabled" [edit]="edit" (showInFalse)="changeShowstatus($event)"></app-salesman-view>
+  </div>

@@ -1,14 +1,15 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker, } from '@angular/google-maps';
-import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { SalesmanViewComponent } from '../shared/dialogs/salesman-view/salesman-view.component';
+import { SalesmanService } from '../../core/services/salesman.service';
 
 export interface Salesmans {
   id: string;
   photo: string;
   name: string;
-  category:  string;
-  isActive:boolean;
+  category: string;
+  isActive: boolean;
   lat: number
   lng: number
 }
@@ -16,18 +17,26 @@ export interface Salesmans {
 @Component({
   selector: 'app-map-locations',
   standalone: true,
-  imports: [CommonModule,GoogleMap, GoogleMapsModule],
+  imports: [CommonModule, GoogleMap, GoogleMapsModule, SalesmanViewComponent],
   templateUrl: './map-locations.component.html',
   styleUrl: './map-locations.component.sass',
 })
 export class MapLocationsComponent {
+  changeShowstatus($event: boolean) {
+    this.show = $event;
+  }
 
   @Input() salemansItems: string[] = [];
-  public statusColorPalette = ['#00913f','#FF0000'];
+
+  public salemansItem: Salesmans | any;
+  public show: boolean = false;
+  public disabled: boolean = true;
+
+  public statusColorPalette = ['#00913f', '#FF0000'];
   saleman: any = {};
 
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
-  constructor(private route: ActivatedRoute) { }
+  constructor(readonly salesService: SalesmanService) { }
 
   center: google.maps.LatLngLiteral = { lat: 24, lng: 12 };
   zoom = 4;
@@ -35,7 +44,7 @@ export class MapLocationsComponent {
   markerPositions: any[] = [];
 
   openInfoWindow(marker: MapMarker, salesman: any) {
-   this.saleman = salesman;
+    this.saleman = salesman;
     try {
       if (this.infoWindow) this.infoWindow.open(marker);
     } catch (error) {
@@ -45,7 +54,7 @@ export class MapLocationsComponent {
 
   ngOnInit() {
     setTimeout(() => {
-     this.salemansItems.map((item: any) => {
+      this.salemansItems.map((item: any) => {
         if (this.markerPositions.length <= this.salemansItems.length) {
           this.markerPositions.push({
             id: item.id,
@@ -59,5 +68,20 @@ export class MapLocationsComponent {
         }
       });
     }, 2000);
+  }
+
+  getSalesmanInfo(salesman: any) {
+    let obj = {};
+
+    this.salesService.getById(salesman.id).subscribe((data: any) => {
+      obj = data;
+      this.salemansItem = obj;
+      
+      
+      setTimeout(() => {
+        
+        this.show = true;
+      }, 1500);
+    })
   }
 }

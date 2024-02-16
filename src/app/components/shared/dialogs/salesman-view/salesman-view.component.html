@@ -1,0 +1,41 @@
+@if (show) {
+
+<form class="modal-view container" [formGroup]="formSalesmans">
+    <div>
+        <h5 class="col-md-12 title-salesman">Datos de vendedor</h5>
+        @if (!disabled) {
+            
+            <div>
+                <label for="inputPassword5" class="form-label">Id: </label>
+                <input class="form-control" type="text" formControlName="id">
+            </div>
+        }
+        <div>
+            <label for="inputPassword5" class="form-label">Nombre: </label>
+            <input class="form-control" type="text" formControlName="name">
+        </div>
+        <div>
+            <label for="inputPassword5" class="form-label">Cargo: </label>
+            <input class="form-control" type="text" formControlName="category">
+        </div>
+        <div>
+            <label for="inputPassword5" class="form-label">Direccion: </label>
+            <input class="form-control" type="text" formControlName="address">
+        </div>
+        <div>
+            <label for="inputPassword5" class="form-label">Foto detalle: </label>
+            <input class="form-control" type="text" formControlName="photo">
+        </div>
+        <div>
+            <label for="inputPassword5" class="form-label">Vehiculo: </label>
+            <input class="form-control" type="text" formControlName="vehicle">
+        </div>
+
+        @if (edit) {
+            <button class="btn btn-primary" (click)="saveSalesman()">Guardar</button>
+        }
+        <button class="btn btn-primary" (click)="closeModal()">Cerrar</button>
+    </div>
+</form>
+
+}
