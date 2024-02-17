@@ -3,6 +3,7 @@ import { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker, } from '@angular
 import { CommonModule } from '@angular/common';
 import { SalesmanViewComponent } from '../shared/dialogs/salesman-view/salesman-view.component';
 import { SalesmanService } from '../../core/services/salesman.service';
+import { defaultIfEmpty } from 'rxjs';
 
 export interface Salesmans {
   id: string;
@@ -10,8 +11,10 @@ export interface Salesmans {
   name: string;
   category: string;
   isActive: boolean;
-  lat: number
-  lng: number
+  lat: number;
+  lng: number;
+  vehicle: string;
+  iconUrl: string;
 }
 
 @Component({
@@ -78,7 +81,8 @@ export class MapLocationsComponent {
       category: item.category,
       isActive: item.isActive,
       lat: item.coordinates.latitude,
-      lng: item.coordinates.longitude
+      lng: item.coordinates.longitude,
+      vehicle: item.vehicle
     }));
   }
 
