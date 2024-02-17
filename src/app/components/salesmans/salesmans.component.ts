@@ -60,7 +60,27 @@ export class SalesmansComponent {
 
   getPhotos(listToConvert: Salesman[]) {
     listToConvert.map((salesman: Salesman) => {
-      salesman.photo = `/assets/${salesman.photo}`;
+      if (salesman.address === '') {
+        salesman.address = 'No reporta';
+      }
+      if (salesman.name === '') {
+        salesman.name = 'No reporta';
+      }
+      if (salesman.category === '') {
+        salesman.category = 'No reporta';
+      }
+      
+      if (salesman.photo.startsWith("persona")) {
+        salesman.photo = `/assets/${salesman.photo}`;
+      } else {
+        salesman.photo = `/assets/persona1`;
+      }
+
+      if (salesman.vehicle === 'moto' || salesman.vehicle === 'carro' ||salesman.vehicle === 'ambulancia' || salesman.vehicle === 'pin1' ||salesman.vehicle === 'pin2' ||salesman.vehicle === 'pin3' || salesman.vehicle === '4' || salesman.vehicle === 'pin10' || salesman.vehicle === 'sinvehiculo' || salesman.vehicle === 'grua' ) {
+        salesman.vehicle = salesman.vehicle;
+      } else {
+        salesman.vehicle = 'sinvehiculo';
+      }
     });
   }
 
