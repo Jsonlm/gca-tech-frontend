@@ -14,17 +14,16 @@ import { Subscription, interval, switchMap } from 'rxjs';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SalesmanViewComponent
+    SalesmanViewComponent,
   ],
   templateUrl: './salesmans.component.html',
-  styleUrl: './salesmans.component.sass'
+  styleUrl: './salesmans.component.sass',
 })
 export class SalesmansComponent {
-
   @Output() salesmansArray = new EventEmitter<string[]>();
 
   public salesmans: Salesman[];
-  public statusColorPalette = ['#00913f','#FF0000'];
+  public statusColorPalette = ['#00913f', '#FF0000'];
   public disabled: boolean = false;
   public show: boolean = false;
   public edit: boolean = true;
@@ -36,9 +35,7 @@ export class SalesmansComponent {
   ) {
     this.salesmans = [];
     this.subscription = interval(10000)
-      .pipe(
-        switchMap(() => this.salesmanService.getAll())
-      )
+      .pipe(switchMap(() => this.salesmanService.getAll()))
       .subscribe((data: any) => {
         this.getPhotos(data);
         this.salesmans = data;
@@ -60,6 +57,8 @@ export class SalesmansComponent {
 
   getPhotos(listToConvert: Salesman[]) {
     listToConvert.map((salesman: Salesman) => {
+      console.log(salesman);
+      
       if (salesman.address === '') {
         salesman.address = 'No reporta';
       }
@@ -69,14 +68,26 @@ export class SalesmansComponent {
       if (salesman.category === '') {
         salesman.category = 'No reporta';
       }
-      
-      if (salesman.photo.startsWith("persona")) {
+
+      if (salesman.photo.startsWith('persona')) {
         salesman.photo = `/assets/${salesman.photo}`;
       } else {
         salesman.photo = `/assets/persona1`;
       }
 
-      if (salesman.vehicle === 'moto' || salesman.vehicle === 'carro' ||salesman.vehicle === 'ambulancia' || salesman.vehicle === 'pin1' ||salesman.vehicle === 'pin2' ||salesman.vehicle === 'pin3' || salesman.vehicle === '4' || salesman.vehicle === 'pin10' || salesman.vehicle === 'sinvehiculo' || salesman.vehicle === 'grua' ) {
+      if (
+        salesman.vehicle === 'ambulancia' ||
+        salesman.vehicle === 'carro'      ||
+        salesman.vehicle === 'grua'       ||
+        salesman.vehicle === 'moto'       ||
+        salesman.vehicle === 'sinvehiculo'||
+        salesman.vehicle === 'pin1'       ||
+        salesman.vehicle === 'pin2'       ||
+        salesman.vehicle === 'pin3'       ||
+        salesman.vehicle === 'pin4'       ||
+        salesman.vehicle === 'pin10'      ||
+        salesman.vehicle === 'sinvehiculo'
+      ) {
         salesman.vehicle = salesman.vehicle;
       } else {
         salesman.vehicle = 'sinvehiculo';
@@ -91,9 +102,8 @@ export class SalesmansComponent {
   }
 
   ngOnDestroy(): void {
-
     if (this.subscription) {
-      this.subscription.unsubscribe(); 
+      this.subscription.unsubscribe();
     }
   }
 }

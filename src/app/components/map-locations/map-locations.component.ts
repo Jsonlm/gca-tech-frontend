@@ -3,7 +3,6 @@ import { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker, } from '@angular
 import { CommonModule } from '@angular/common';
 import { SalesmanViewComponent } from '../shared/dialogs/salesman-view/salesman-view.component';
 import { SalesmanService } from '../../core/services/salesman.service';
-import { defaultIfEmpty } from 'rxjs';
 
 export interface Salesmans {
   id: string;
@@ -14,7 +13,6 @@ export interface Salesmans {
   lat: number;
   lng: number;
   vehicle: string;
-  iconUrl: string;
 }
 
 @Component({
@@ -40,7 +38,6 @@ export class MapLocationsComponent {
   center: google.maps.LatLngLiteral = { lat: 4, lng: -74 };
   zoom = 4;
   markerOptions: google.maps.MarkerOptions = { draggable: false };
-  markerImage: google.maps.Icon = { url : '/assets/pinselected.svg' };
   markerPositions: any[] = [];
 
   openInfoWindow(marker: MapMarker, salesman: any) {
@@ -53,33 +50,20 @@ export class MapLocationsComponent {
   }
 
   ngOnInit() {
-    setTimeout(() => {
       this.salemansItems.map((item: any) => {
         if (this.markerPositions.length <= this.salemansItems.length) {
-          if (item.photo.startsWith("persona") ) {
-            this.markerPositions.push({
-              id: item.id,
-              photo: item.photo,
-              name: item.name,
-              category: item.category,
-              isActive: item.isActive,
-              lat: item.coordinates.latitude,
-              lng: item.coordinates.longitude
-            });
-          } else {
-            this.markerPositions.push({
-              id: item.id,
-              photo: 'persona1',
-              name: item.name,
-              category: item.category,
-              isActive: item.isActive,
-              lat: item.coordinates.latitude,
-              lng: item.coordinates.longitude
-            });
-          }
+          this.markerPositions.push({
+            id: item.id,
+            photo: item.photo,
+            name: item.name,
+            category: item.category,
+            isActive: item.isActive,
+            lat: item.coordinates.latitude,
+            lng: item.coordinates.longitude,
+            vehicle: item.vehicle
+          });
         }
       });
-    }, 2000);
   }
 
   ngOnChanges(changes: SimpleChanges | any) {
